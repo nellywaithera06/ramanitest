@@ -159,13 +159,8 @@
         <div class="two-columns">
           <div class="card">
             <h3>🗺️ Map view</h3>
-            <p>Here is an aerial view of the land you have leased</p>
-            <div class="map-placeholder">
-              <img src="https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=800&h=200&fit=crop" alt="Map View" class="map-image">
-              <div class="map-overlay">
-                <span>Interactive Map View</span>
-              </div>
-            </div>
+            <p>Here is an interactive map of the land you have leased</p>
+            <div id="dashboardMap" class="dashboard-map"></div>
           </div>
 
           <div class="card">
@@ -285,6 +280,16 @@ import Parcels from '../components/Parcels.vue'
 import Conservancies from '../components/Conservancies.vue'
 import MasterMap from '../components/MasterMap.vue'
 import Chart from 'chart.js/auto'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
+
+// Fix for default marker icons in Leaflet
+delete L.Icon.Default.prototype._getIconUrl
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+})
 
 export default {
   name: 'DashboardView',
@@ -305,7 +310,8 @@ export default {
       landManagementDropdownOpen: false,
       isSidebarCollapsed: false,
       campPieChart: null,
-      revenueDonutChart: null
+      revenueDonutChart: null,
+      dashboardMap: null
     }
   },
   methods: {
@@ -366,6 +372,39 @@ export default {
     selectLandMenu(view) {
       this.currentView = view;
       this.landManagementDropdownOpen = false;
+    },
+    initDashboardMap() {
+      const mapElement = document.getElementById('dashboardMap');
+      if (mapElement && !this.dashboardMap) {
+        // Center on Africa/Kenya
+        this.dashboardMap = L.map('dashboardMap').setView([-1.283333, 36.816667], 6);
+        
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'
+        }).addTo(this.dashboardMap);
+        
+        // Add sample markers for demonstration
+        const sampleLocations = [
+          { lat: -1.283333, lng: 36.816667, name: 'Nairobi - Central Hub', type: 'parcel' },
+          { lat: -1.85, lng: 36.783333, name: 'Kajiado - Conservancy', type: 'conservancy' },
+          { lat: -1.166667, lng: 36.833333, name: 'Kiambu - Farmlands', type: 'parcel' },
+          { lat: -1.516667, lng: 37.266667, name: 'Machakos - Agricultural Zone', type: 'parcel' },
+          { lat: 48.931, lng: 2.396, name: 'La Courneuve Conservancy', type: 'conservancy' }
+        ];
+        
+        sampleLocations.forEach(location => {
+          const markerColor = location.type === 'parcel' ? '#f44336' : '#4CAF50';
+          const customIcon = L.divIcon({
+            html: `<div style="background-color: ${markerColor}; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 4px rgba(0,0,0,0.3);"></div>`,
+            iconSize: [12, 12],
+            className: 'dashboard-marker'
+          });
+          
+          L.marker([location.lat, location.lng], { icon: customIcon })
+            .addTo(this.dashboardMap)
+            .bindPopup(`<b>${location.name}</b><br>Type: ${location.type === 'parcel' ? '📍 Parcel' : '🌳 Conservancy'}`);
+        });
+      }
     },
     initCharts() {
       if (this.campPieChart) {
@@ -449,6 +488,7 @@ export default {
     this.checkAuth();
     this.$nextTick(() => {
       this.initCharts();
+      this.initDashboardMap();
     });
   },
   beforeUnmount() {
@@ -458,11 +498,19 @@ export default {
     if (this.revenueDonutChart) {
       this.revenueDonutChart.destroy();
     }
+    if (this.dashboardMap) {
+      this.dashboardMap.remove();
+    }
   },
   watch: {
     isSidebarCollapsed() {
       this.$nextTick(() => {
         this.initCharts();
+        setTimeout(() => {
+          if (this.dashboardMap) {
+            this.dashboardMap.invalidateSize();
+          }
+        }, 300);
       });
     }
   }
@@ -774,30 +822,14 @@ export default {
   font-size: 16px;
 }
 
-/* Map Styles */
-.map-placeholder {
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-top: 10px;
-}
-
-.map-image {
+/* Dashboard Map Styles */
+.dashboard-map {
+  height: 250px;
   width: 100%;
-  height: 160px;
-  object-fit: cover;
-}
-
-.map-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(0,0,0,0.7));
-  color: white;
-  padding: 30px 15px 15px;
-  text-align: center;
-  font-size: 12px;
+  border-radius: 8px;
+  margin-top: 10px;
+  z-index: 1;
+  background: #e8f4f8;
 }
 
 /* Legend */
@@ -987,6 +1019,10 @@ canvas {
   canvas {
     max-width: 200px;
     max-height: 200px;
+  }
+  
+  .dashboard-map {
+    height: 200px;
   }
 }
 </style>
