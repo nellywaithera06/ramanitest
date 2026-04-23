@@ -257,6 +257,9 @@
       <!-- User Management View -->
       <UserManagement v-else-if="currentView === 'userManagement'" />
 
+      <!-- Help View -->
+      <Help v-else-if="currentView === 'help'" />
+
       <!-- Other Views -->
       <LeaseManagement v-else-if="currentView === 'lease'" />
       <LeaseHolders v-else-if="currentView === 'leaseHolders'" />
@@ -287,6 +290,7 @@ import Conservancies from '../components/Conservancies.vue'
 import MasterMap from '../components/MasterMap.vue'
 import Settings from '../components/Settings.vue'
 import UserManagement from '../components/UserManagement.vue'
+import Help from '../components/Help.vue'
 import Chart from 'chart.js/auto'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -310,7 +314,8 @@ export default {
     Conservancies,
     MasterMap,
     Settings,
-    UserManagement
+    UserManagement,
+    Help,
   },
   data() {
     return {
