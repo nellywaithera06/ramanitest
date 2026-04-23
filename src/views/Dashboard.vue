@@ -62,7 +62,7 @@
 
         <!-- Land Management Dropdown -->
         <div class="nav-item dropdown-toggle" @click="toggleLandManagementDropdown">
-          <i class="pi pi-map nav-icon"></i>
+          <i class="pi pi-map-marker nav-icon"></i>
           <span class="nav-label" v-if="!isSidebarCollapsed">Land Management</span>
           <i v-if="!isSidebarCollapsed" class="pi pi-chevron-down dropdown-arrow" :class="{ 'rotated': landManagementDropdownOpen }"></i>
         </div>
@@ -78,7 +78,7 @@
           </div>
         </div>
 
-        <!-- Settings -->
+        <!-- Settings - LINKED -->
         <div class="nav-item" :class="{ active: currentView === 'settings' }" @click="currentView = 'settings'">
           <i class="pi pi-cog nav-icon"></i>
           <span class="nav-label" v-if="!isSidebarCollapsed">Settings</span>
@@ -251,6 +251,9 @@
       <!-- Master Map View -->
       <MasterMap v-else-if="currentView === 'masterMap'" />
 
+      <!-- Settings View - LINKED -->
+      <Settings v-else-if="currentView === 'settings'" />
+
       <!-- Other Views -->
       <LeaseManagement v-else-if="currentView === 'lease'" />
       <LeaseHolders v-else-if="currentView === 'leaseHolders'" />
@@ -279,6 +282,7 @@ import Beneficiaries from '../components/Beneficiaries.vue'
 import Parcels from '../components/Parcels.vue'
 import Conservancies from '../components/Conservancies.vue'
 import MasterMap from '../components/MasterMap.vue'
+import Settings from '../components/Settings.vue'
 import Chart from 'chart.js/auto'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -300,7 +304,8 @@ export default {
     Beneficiaries,
     Parcels,
     Conservancies,
-    MasterMap
+    MasterMap,
+    Settings  // REGISTER SETTINGS COMPONENT
   },
   data() {
     return {

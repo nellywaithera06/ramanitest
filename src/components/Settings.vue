@@ -1,709 +1,563 @@
-<!-- src/views/dashboard/Settings.vue -->
+<!-- src/components/Settings.vue -->
 <template>
-  <div class="p-6 bg-gray-50 min-h-screen">
-    <!-- Page Header -->
-    <div class="mb-6">
-      <h1 class="text-2xl font-semibold text-gray-800">Settings</h1>
-      <p class="text-gray-500 mt-1">Manage system preferences and configurations</p>
+  <div class="settings-container">
+    <div class="settings-header">
+      <h1 class="settings-title">Settings</h1>
+      <p class="settings-subtitle">Manage system preferences and configurations</p>
     </div>
 
     <!-- Settings Tabs -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-      <TabView v-model:activeIndex="activeTab">
+    <div class="settings-tabs">
+      <div class="tabs-header">
+        <button 
+          v-for="tab in tabs" 
+          :key="tab.key"
+          class="tab-btn"
+          :class="{ active: activeTab === tab.key }"
+          @click="activeTab = tab.key">
+          <i :class="tab.icon"></i>
+          {{ tab.label }}
+        </button>
+      </div>
+
+      <div class="tabs-content">
         <!-- General Settings -->
-        <TabPanel header="General">
-          <div class="p-6">
-            <div class="space-y-8">
-              <!-- System Configuration -->
-              <div class="border-b pb-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">System Configuration</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">System Name</label>
-                    <InputText v-model="generalSettings.systemName" class="w-full" />
-                    <p class="text-xs text-gray-500 mt-1">Name displayed throughout the system</p>
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">System Logo</label>
-                    <FileUpload mode="basic" name="logo" accept="image/*" :maxFileSize="1000000" @upload="onLogoUpload" />
-                    <p class="text-xs text-gray-500 mt-1">Recommended size: 200x50px</p>
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">System Theme</label>
-                    <Dropdown v-model="generalSettings.theme" :options="themes" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Primary Color</label>
-                    <div class="flex gap-2 items-center">
-                      <input type="color" v-model="generalSettings.primaryColor" class="w-12 h-10 rounded border" />
-                      <InputText v-model="generalSettings.primaryColor" class="flex-1" />
-                    </div>
-                  </div>
-                </div>
+        <div v-if="activeTab === 'general'" class="tab-pane">
+          <div class="settings-section">
+            <h3>System Configuration</h3>
+            <div class="settings-grid">
+              <div class="setting-field">
+                <label>System Name</label>
+                <input type="text" v-model="generalSettings.systemName" class="setting-input" />
               </div>
-
-              <!-- Regional Settings -->
-              <div class="border-b pb-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Regional Settings</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Default Language</label>
-                    <Dropdown v-model="generalSettings.language" :options="languages" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Date Format</label>
-                    <Dropdown v-model="generalSettings.dateFormat" :options="dateFormats" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Time Format</label>
-                    <Dropdown v-model="generalSettings.timeFormat" :options="timeFormats" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Time Zone</label>
-                    <Dropdown v-model="generalSettings.timezone" :options="timezones" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Default Country</label>
-                    <Dropdown v-model="generalSettings.country" :options="countries" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Currency</label>
-                    <Dropdown v-model="generalSettings.currency" :options="currencies" class="w-full" />
-                  </div>
-                </div>
+              <div class="setting-field">
+                <label>System Theme</label>
+                <select v-model="generalSettings.theme" class="setting-select">
+                  <option>Light</option>
+                  <option>Dark</option>
+                  <option>System Default</option>
+                </select>
               </div>
-
-              <!-- Display Preferences -->
-              <div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Display Preferences</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Items Per Page</label>
-                    <Dropdown v-model="generalSettings.itemsPerPage" :options="itemsPerPageOptions" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Default Dashboard View</label>
-                    <Dropdown v-model="generalSettings.defaultDashboard" :options="dashboardViews" class="w-full" />
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700">Compact Mode</label>
-                      <p class="text-xs text-gray-500">Reduce spacing and padding</p>
-                    </div>
-                    <InputSwitch v-model="generalSettings.compactMode" />
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700">Show Empty Fields</label>
-                      <p class="text-xs text-gray-500">Display fields with no data</p>
-                    </div>
-                    <InputSwitch v-model="generalSettings.showEmptyFields" />
-                  </div>
-                </div>
+              <div class="setting-field">
+                <label>Default Language</label>
+                <select v-model="generalSettings.language" class="setting-select">
+                  <option>English</option>
+                  <option>Swahili</option>
+                  <option>French</option>
+                </select>
+              </div>
+              <div class="setting-field">
+                <label>Date Format</label>
+                <select v-model="generalSettings.dateFormat" class="setting-select">
+                  <option>DD/MM/YYYY</option>
+                  <option>MM/DD/YYYY</option>
+                  <option>YYYY-MM-DD</option>
+                </select>
+              </div>
+              <div class="setting-field">
+                <label>Time Zone</label>
+                <select v-model="generalSettings.timezone" class="setting-select">
+                  <option>Africa/Nairobi</option>
+                  <option>Africa/Johannesburg</option>
+                  <option>Africa/Cairo</option>
+                </select>
+              </div>
+              <div class="setting-field">
+                <label>Currency</label>
+                <select v-model="generalSettings.currency" class="setting-select">
+                  <option>KES</option>
+                  <option>USD</option>
+                  <option>EUR</option>
+                </select>
               </div>
             </div>
           </div>
-        </TabPanel>
+
+          <div class="settings-section">
+            <h3>Display Preferences</h3>
+            <div class="settings-grid">
+              <div class="setting-field">
+                <label>Items Per Page</label>
+                <select v-model="generalSettings.itemsPerPage" class="setting-select">
+                  <option>10</option>
+                  <option>25</option>
+                  <option>50</option>
+                  <option>100</option>
+                </select>
+              </div>
+              <div class="setting-field checkbox-field">
+                <label>
+                  <input type="checkbox" v-model="generalSettings.compactMode" />
+                  Compact Mode
+                </label>
+              </div>
+              <div class="setting-field checkbox-field">
+                <label>
+                  <input type="checkbox" v-model="generalSettings.showEmptyFields" />
+                  Show Empty Fields
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <!-- Lease Settings -->
-        <TabPanel header="Lease">
-          <div class="p-6">
-            <div class="space-y-8">
-              <!-- Lease Defaults -->
-              <div class="border-b pb-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Lease Defaults</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Default Payment Cycle</label>
-                    <Dropdown v-model="leaseSettings.defaultPaymentCycle" :options="paymentCycles" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Default Lease Duration (Years)</label>
-                    <InputNumber v-model="leaseSettings.defaultDuration" :min="1" :max="99" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Lease ID Prefix</label>
-                    <InputText v-model="leaseSettings.idPrefix" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Default Land Unit</label>
-                    <Dropdown v-model="leaseSettings.defaultLandUnit" :options="landUnits" class="w-full" />
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700">Auto-generate Lease ID</label>
-                      <p class="text-xs text-gray-500">Automatically generate lease numbers</p>
-                    </div>
-                    <InputSwitch v-model="leaseSettings.autoGenerateId" />
-                  </div>
-                </div>
+        <div v-if="activeTab === 'lease'" class="tab-pane">
+          <div class="settings-section">
+            <h3>Lease Defaults</h3>
+            <div class="settings-grid">
+              <div class="setting-field">
+                <label>Default Payment Cycle</label>
+                <select v-model="leaseSettings.defaultPaymentCycle" class="setting-select">
+                  <option>Monthly</option>
+                  <option>Quarterly</option>
+                  <option>Semi-Annually</option>
+                  <option>Annually</option>
+                </select>
               </div>
-
-              <!-- Payment Settings -->
-              <div class="border-b pb-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Payment Settings</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700">Enable Late Fees</label>
-                      <p class="text-xs text-gray-500">Apply late payment penalties</p>
-                    </div>
-                    <InputSwitch v-model="leaseSettings.enableLateFees" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Late Fee Percentage (%)</label>
-                    <InputNumber v-model="leaseSettings.lateFeePercentage" :min="0" :max="100" suffix="%" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Grace Period (Days)</label>
-                    <InputNumber v-model="leaseSettings.gracePeriod" :min="0" :max="30" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Payment Reminder Days</label>
-                    <InputNumber v-model="leaseSettings.paymentReminderDays" :min="1" :max="30" class="w-full" />
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700">Enable Interest Calculation</label>
-                      <p class="text-xs text-gray-500">Calculate interest on outstanding amounts</p>
-                    </div>
-                    <InputSwitch v-model="leaseSettings.enableInterest" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Interest Rate (%)</label>
-                    <InputNumber v-model="leaseSettings.interestRate" :min="0" :max="100" suffix="%" class="w-full" />
-                  </div>
-                </div>
+              <div class="setting-field">
+                <label>Default Lease Duration (Years)</label>
+                <input type="number" v-model="leaseSettings.defaultDuration" class="setting-input" />
               </div>
-
-              <!-- Required Documents -->
-              <div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Required Lease Documents</h3>
-                <div class="space-y-2">
-                  <div v-for="doc in leaseSettings.requiredDocuments" :key="doc.name" class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div class="flex items-center gap-3">
-                      <i :class="doc.checked ? 'pi pi-check-circle text-green-500' : 'pi pi-circle'"></i>
-                      <span>{{ doc.name }}</span>
-                    </div>
-                    <InputSwitch v-model="doc.checked" />
-                  </div>
-                </div>
+              <div class="setting-field">
+                <label>Lease ID Prefix</label>
+                <input type="text" v-model="leaseSettings.idPrefix" class="setting-input" />
+              </div>
+              <div class="setting-field checkbox-field">
+                <label>
+                  <input type="checkbox" v-model="leaseSettings.autoGenerateId" />
+                  Auto-generate Lease ID
+                </label>
               </div>
             </div>
           </div>
-        </TabPanel>
 
-        <!-- User Management Settings -->
-        <TabPanel header="User Management">
-          <div class="p-6">
-            <div class="space-y-8">
-              <!-- User Roles -->
-              <div class="border-b pb-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">User Roles & Permissions</h3>
-                <DataTable :value="roles" class="p-datatable-sm">
-                  <Column field="role" header="Role" sortable></Column>
-                  <Column field="description" header="Description"></Column>
-                  <Column field="users" header="Users"></Column>
-                  <Column header="Actions">
-                    <template #body="{ data }">
-                      <Button icon="pi pi-pencil" class="p-button-rounded p-button-text" @click="editRole(data)" />
-                      <Button icon="pi pi-copy" class="p-button-rounded p-button-text" @click="copyRole(data)" />
-                    </template>
-                  </Column>
-                </DataTable>
-                <Button label="Add New Role" icon="pi pi-plus" class="mt-4 p-button-outlined" />
+          <div class="settings-section">
+            <h3>Payment Settings</h3>
+            <div class="settings-grid">
+              <div class="setting-field checkbox-field">
+                <label>
+                  <input type="checkbox" v-model="leaseSettings.enableLateFees" />
+                  Enable Late Fees
+                </label>
               </div>
-
-              <!-- User Account Settings -->
-              <div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">User Account Settings</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Default User Role</label>
-                    <Dropdown v-model="userSettings.defaultRole" :options="roleOptions" class="w-full" />
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700">Allow User Registration</label>
-                      <p class="text-xs text-gray-500">Let users create their own accounts</p>
-                    </div>
-                    <InputSwitch v-model="userSettings.allowRegistration" />
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700">Require Admin Approval</label>
-                      <p class="text-xs text-gray-500">Admin must approve new accounts</p>
-                    </div>
-                    <InputSwitch v-model="userSettings.requireApproval" />
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700">Force Password Change</label>
-                      <p class="text-xs text-gray-500">Require password change on first login</p>
-                    </div>
-                    <InputSwitch v-model="userSettings.forcePasswordChange" />
-                  </div>
-                </div>
+              <div class="setting-field">
+                <label>Late Fee Percentage (%)</label>
+                <input type="number" v-model="leaseSettings.lateFeePercentage" class="setting-input" />
+              </div>
+              <div class="setting-field">
+                <label>Grace Period (Days)</label>
+                <input type="number" v-model="leaseSettings.gracePeriod" class="setting-input" />
               </div>
             </div>
           </div>
-        </TabPanel>
+        </div>
 
         <!-- Security Settings -->
-        <TabPanel header="Security">
-          <div class="p-6">
-            <div class="space-y-8">
-              <!-- Password Policy -->
-              <div class="border-b pb-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Password Policy</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Minimum Password Length</label>
-                    <InputNumber v-model="securitySettings.minPasswordLength" :min="6" :max="20" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Password Expiry (Days)</label>
-                    <InputNumber v-model="securitySettings.passwordExpiry" :min="0" :max="365" class="w-full" />
-                    <p class="text-xs text-gray-500">0 = never expire</p>
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Max Login Attempts</label>
-                    <InputNumber v-model="securitySettings.maxLoginAttempts" :min="3" :max="10" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Account Lock Duration (Minutes)</label>
-                    <InputNumber v-model="securitySettings.lockDuration" :min="5" :max="120" class="w-full" />
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700">Require Uppercase</label>
-                    </div>
-                    <InputSwitch v-model="securitySettings.requireUppercase" />
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700">Require Numbers</label>
-                    </div>
-                    <InputSwitch v-model="securitySettings.requireNumbers" />
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700">Require Special Characters</label>
-                    </div>
-                    <InputSwitch v-model="securitySettings.requireSpecialChars" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Prevent Password Reuse</label>
-                    <InputNumber v-model="securitySettings.preventReuse" :min="0" :max="10" class="w-full" />
-                    <p class="text-xs text-gray-500">Number of previous passwords to remember</p>
-                  </div>
-                </div>
+        <div v-if="activeTab === 'security'" class="tab-pane">
+          <div class="settings-section">
+            <h3>Password Policy</h3>
+            <div class="settings-grid">
+              <div class="setting-field">
+                <label>Minimum Password Length</label>
+                <input type="number" v-model="securitySettings.minPasswordLength" class="setting-input" />
               </div>
-
-              <!-- Session Management -->
-              <div class="border-b pb-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Session Management</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Session Timeout (Minutes)</label>
-                    <InputNumber v-model="securitySettings.sessionTimeout" :min="5" :max="120" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Remember Me Duration (Days)</label>
-                    <InputNumber v-model="securitySettings.rememberMeDuration" :min="1" :max="90" class="w-full" />
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700">Single Session Only</label>
-                      <p class="text-xs text-gray-500">Allow only one active session per user</p>
-                    </div>
-                    <InputSwitch v-model="securitySettings.singleSession" />
-                  </div>
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700">Logout on Browser Close</label>
-                    </div>
-                    <InputSwitch v-model="securitySettings.logoutOnClose" />
-                  </div>
-                </div>
+              <div class="setting-field">
+                <label>Password Expiry (Days)</label>
+                <input type="number" v-model="securitySettings.passwordExpiry" class="setting-input" />
               </div>
-
-              <!-- Two-Factor Authentication -->
-              <div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Two-Factor Authentication (2FA)</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700">Enable 2FA</label>
-                    </div>
-                    <InputSwitch v-model="securitySettings.twoFactorAuth" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">2FA Method</label>
-                    <Dropdown v-model="securitySettings.twoFactorMethod" :options="twoFactorMethods" class="w-full" />
-                  </div>
-                </div>
+              <div class="setting-field checkbox-field">
+                <label>
+                  <input type="checkbox" v-model="securitySettings.requireUppercase" />
+                  Require Uppercase
+                </label>
+              </div>
+              <div class="setting-field checkbox-field">
+                <label>
+                  <input type="checkbox" v-model="securitySettings.requireNumbers" />
+                  Require Numbers
+                </label>
+              </div>
+              <div class="setting-field checkbox-field">
+                <label>
+                  <input type="checkbox" v-model="securitySettings.requireSpecialChars" />
+                  Require Special Characters
+                </label>
               </div>
             </div>
           </div>
-        </TabPanel>
 
-        <!-- Notification Settings -->
-        <TabPanel header="Notifications">
-          <div class="p-6">
-            <div class="space-y-8">
-              <!-- Email Configuration -->
-              <div class="border-b pb-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">SMTP Configuration</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">SMTP Server</label>
-                    <InputText v-model="notificationSettings.smtpServer" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Port</label>
-                    <InputNumber v-model="notificationSettings.smtpPort" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Encryption</label>
-                    <Dropdown v-model="notificationSettings.encryption" :options="encryptionTypes" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">From Email</label>
-                    <InputText v-model="notificationSettings.fromEmail" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">From Name</label>
-                    <InputText v-model="notificationSettings.fromName" class="w-full" />
-                  </div>
-                </div>
+          <div class="settings-section">
+            <h3>Session Management</h3>
+            <div class="settings-grid">
+              <div class="setting-field">
+                <label>Session Timeout (Minutes)</label>
+                <input type="number" v-model="securitySettings.sessionTimeout" class="setting-input" />
               </div>
-
-              <!-- Notification Events -->
-              <div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Notification Events</h3>
-                <DataTable :value="notificationEvents" class="p-datatable-sm">
-                  <Column field="event" header="Event" sortable></Column>
-                  <Column field="description" header="Description"></Column>
-                  <Column header="Email" style="width: 80px">
-                    <template #body="{ data }">
-                      <InputSwitch v-model="data.email" />
-                    </template>
-                  </Column>
-                  <Column header="SMS" style="width: 80px">
-                    <template #body="{ data }">
-                      <InputSwitch v-model="data.sms" />
-                    </template>
-                  </Column>
-                  <Column header="In-app" style="width: 80px">
-                    <template #body="{ data }">
-                      <InputSwitch v-model="data.inApp" />
-                    </template>
-                  </Column>
-                </DataTable>
+              <div class="setting-field checkbox-field">
+                <label>
+                  <input type="checkbox" v-model="securitySettings.twoFactorAuth" />
+                  Enable Two-Factor Authentication
+                </label>
               </div>
             </div>
           </div>
-        </TabPanel>
+        </div>
 
         <!-- Backup Settings -->
-        <TabPanel header="Backup">
-          <div class="p-6">
-            <div class="space-y-8">
-              <!-- Automatic Backup -->
-              <div class="border-b pb-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Automatic Backup</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700">Enable Auto Backup</label>
-                    </div>
-                    <InputSwitch v-model="backupSettings.autoBackup" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Backup Frequency</label>
-                    <Dropdown v-model="backupSettings.frequency" :options="backupFrequencies" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Backup Time</label>
-                    <Calendar v-model="backupSettings.backupTime" timeOnly hourFormat="24" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Backup Retention</label>
-                    <InputNumber v-model="backupSettings.retention" :min="1" :max="365" suffix=" days" class="w-full" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Backup Location</label>
-                    <Dropdown v-model="backupSettings.location" :options="backupLocations" class="w-full" />
-                  </div>
-                </div>
+        <div v-if="activeTab === 'backup'" class="tab-pane">
+          <div class="settings-section">
+            <h3>Automatic Backup</h3>
+            <div class="settings-grid">
+              <div class="setting-field checkbox-field">
+                <label>
+                  <input type="checkbox" v-model="backupSettings.autoBackup" />
+                  Enable Auto Backup
+                </label>
               </div>
-
-              <!-- Manual Backup -->
-              <div class="border-b pb-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Manual Backup</h3>
-                <div class="flex gap-3">
-                  <Button label="Create Backup Now" icon="pi pi-download" class="bg-blue-600" @click="createBackup" />
-                  <Button label="Restore from Backup" icon="pi pi-upload" class="p-button-outlined" />
-                </div>
-                <p class="text-sm text-gray-500 mt-3">Last backup: {{ lastBackupDate || 'Never' }}</p>
+              <div class="setting-field">
+                <label>Backup Frequency</label>
+                <select v-model="backupSettings.frequency" class="setting-select">
+                  <option>Daily</option>
+                  <option>Weekly</option>
+                  <option>Monthly</option>
+                </select>
               </div>
-
-              <!-- Danger Zone -->
-              <div>
-                <h3 class="text-lg font-semibold text-red-600 mb-4">Danger Zone</h3>
-                <div class="space-y-3">
-                  <div class="flex justify-between items-center p-4 bg-red-50 rounded-lg">
-                    <div>
-                      <label class="font-medium text-red-800">Export All Data</label>
-                      <p class="text-sm text-red-600">Download complete system data as JSON/CSV</p>
-                    </div>
-                    <Button label="Export" icon="pi pi-download" class="p-button-warning" />
-                  </div>
-                  <div class="flex justify-between items-center p-4 bg-red-50 rounded-lg">
-                    <div>
-                      <label class="font-medium text-red-800">Delete All Data</label>
-                      <p class="text-sm text-red-600">Permanently delete all system data (irreversible)</p>
-                    </div>
-                    <Button label="Delete Everything" icon="pi pi-trash" class="p-button-danger" @click="confirmDeleteAll" />
-                  </div>
-                </div>
+              <div class="setting-field">
+                <label>Backup Retention (Days)</label>
+                <input type="number" v-model="backupSettings.retention" class="setting-input" />
               </div>
             </div>
           </div>
-        </TabPanel>
-      </TabView>
 
-      <!-- Action Buttons -->
-      <div class="border-t p-6 flex justify-end gap-3">
-        <Button label="Cancel" icon="pi pi-times" class="p-button-outlined" @click="resetSettings" />
-        <Button label="Save Changes" icon="pi pi-check" class="bg-blue-600" @click="saveSettings" />
+          <div class="settings-section">
+            <h3>Manual Backup</h3>
+            <div class="button-group">
+              <button @click="createBackup" class="btn-primary">Create Backup Now</button>
+              <button class="btn-secondary">Restore from Backup</button>
+            </div>
+            <p class="backup-info">Last backup: {{ lastBackupDate || 'Never' }}</p>
+          </div>
+
+          <div class="settings-section danger-zone">
+            <h3>Danger Zone</h3>
+            <div class="danger-actions">
+              <button @click="confirmDeleteAll" class="btn-danger">Delete All Data</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <ConfirmDialog />
-    <Toast />
+    <!-- Action Buttons -->
+    <div class="settings-actions">
+      <button @click="resetSettings" class="btn-secondary">Cancel</button>
+      <button @click="saveSettings" class="btn-primary">Save Changes</button>
+    </div>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import { useConfirm } from 'primevue/useconfirm'
-import TabView from 'primevue/tabview'
-import TabPanel from 'primevue/tabpanel'
-import InputText from 'primevue/inputtext'
-import InputNumber from 'primevue/inputnumber'
-import InputSwitch from 'primevue/inputswitch'
-import Dropdown from 'primevue/dropdown'
-import Calendar from 'primevue/calendar'
-import Button from 'primevue/button'
-import DataTable from 'primevue/datatable'
-import Column from 'primevue/column'
-import FileUpload from 'primevue/fileupload'
-import ConfirmDialog from 'primevue/confirmdialog'
-import Toast from 'primevue/toast'
-import { useToast } from 'primevue/usetoast'
-
-const confirm = useConfirm()
-const toast = useToast()
-const activeTab = ref(0)
-
-// General Settings
-const generalSettings = ref({
-  systemName: 'Ramani Land Management System',
-  theme: 'Light',
-  primaryColor: '#3B82F6',
-  language: 'English',
-  dateFormat: 'DD/MM/YYYY',
-  timeFormat: '24-hour',
-  timezone: 'Africa/Nairobi',
-  country: 'Kenya',
-  currency: 'KES',
-  itemsPerPage: 25,
-  defaultDashboard: 'Summary',
-  compactMode: false,
-  showEmptyFields: true
-})
-
-// Lease Settings
-const leaseSettings = ref({
-  defaultPaymentCycle: 'Annually',
-  defaultDuration: 5,
-  autoGenerateId: true,
-  idPrefix: 'L-',
-  defaultLandUnit: 'Hectares',
-  enableLateFees: true,
-  lateFeePercentage: 5,
-  gracePeriod: 7,
-  paymentReminderDays: 7,
-  enableInterest: false,
-  interestRate: 12,
-  requiredDocuments: [
-    { name: 'ID Copy', checked: true },
-    { name: 'Land Title Deed', checked: true },
-    { name: 'Survey Report', checked: true },
-    { name: 'Passport Photo', checked: true },
-    { name: 'KRA PIN Certificate', checked: false },
-    { name: 'Lease Agreement', checked: true }
-  ]
-})
-
-// User Settings
-const userSettings = ref({
-  defaultRole: 'Viewer',
-  allowRegistration: false,
-  requireApproval: true,
-  forcePasswordChange: true
-})
-
-// Security Settings
-const securitySettings = ref({
-  minPasswordLength: 8,
-  passwordExpiry: 90,
-  maxLoginAttempts: 5,
-  lockDuration: 30,
-  requireUppercase: true,
-  requireNumbers: true,
-  requireSpecialChars: true,
-  preventReuse: 5,
-  sessionTimeout: 30,
-  rememberMeDuration: 30,
-  singleSession: false,
-  logoutOnClose: true,
-  twoFactorAuth: false,
-  twoFactorMethod: 'Authenticator App'
-})
-
-// Notification Settings
-const notificationSettings = ref({
-  smtpServer: 'smtp.gmail.com',
-  smtpPort: 587,
-  encryption: 'TLS',
-  fromEmail: 'noreply@ramani.com',
-  fromName: 'Ramani System'
-})
-
-// Backup Settings
-const backupSettings = ref({
-  autoBackup: true,
-  frequency: 'Weekly',
-  backupTime: null,
-  retention: 30,
-  location: 'Cloud'
-})
-
-const lastBackupDate = ref('2024-01-15 14:30:00')
-
-// Dropdown Options
-const themes = ['Light', 'Dark', 'System Default']
-const languages = ['English', 'Swahili', 'French']
-const dateFormats = ['DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD']
-const timeFormats = ['12-hour', '24-hour']
-const timezones = ['Africa/Nairobi', 'Africa/Johannesburg', 'Africa/Cairo']
-const countries = ['Kenya', 'Uganda', 'Tanzania', 'Rwanda', 'Burundi']
-const currencies = ['KES', 'USD', 'EUR', 'GBP']
-const itemsPerPageOptions = [10, 25, 50, 100]
-const dashboardViews = ['Summary', 'Detailed', 'Custom']
-const paymentCycles = ['Monthly', 'Quarterly', 'Semi-Annually', 'Annually']
-const landUnits = ['Hectares', 'Acres', 'Square Meters']
-const roleOptions = ['Super Admin', 'Admin', 'Lease Manager', 'Finance Officer', 'Document Controller', 'Viewer']
-const twoFactorMethods = ['Authenticator App', 'SMS', 'Email']
-const encryptionTypes = ['TLS', 'SSL', 'None']
-const backupFrequencies = ['Daily', 'Weekly', 'Monthly']
-const backupLocations = ['Local', 'Cloud', 'External Drive']
-
-// Roles table data
-const roles = ref([
-  { role: 'Super Admin', description: 'Full system access', users: 1 },
-  { role: 'Admin', description: 'All except system settings', users: 3 },
-  { role: 'Lease Manager', description: 'Manage leases only', users: 5 },
-  { role: 'Finance Officer', description: 'Payment and invoices only', users: 2 },
-  { role: 'Document Controller', description: 'Document management only', users: 2 },
-  { role: 'Viewer', description: 'Read-only access', users: 10 }
-])
-
-// Notification events
-const notificationEvents = ref([
-  { event: 'Lease Created', description: 'When a new lease is created', email: true, sms: false, inApp: true },
-  { event: 'Lease Expiring Soon', description: '30 days before lease expiry', email: true, sms: true, inApp: true },
-  { event: 'Lease Expired', description: 'When lease expires', email: true, sms: true, inApp: true },
-  { event: 'Payment Due', description: '7 days before payment due', email: true, sms: true, inApp: true },
-  { event: 'Payment Received', description: 'When payment is received', email: true, sms: false, inApp: true },
-  { event: 'Payment Late', description: 'When payment is overdue', email: true, sms: true, inApp: true },
-  { event: 'Document Uploaded', description: 'When a document is uploaded', email: true, sms: false, inApp: true },
-  { event: 'User Account Created', description: 'When new user account is created', email: true, sms: false, inApp: true },
-  { event: 'Password Changed', description: 'When user changes password', email: true, sms: false, inApp: true },
-  { event: 'New Login Detected', description: 'Login from new device', email: true, sms: false, inApp: true }
-])
-
-const onLogoUpload = (event) => {
-  toast.add({ severity: 'success', summary: 'Success', detail: 'Logo uploaded successfully', life: 3000 })
-}
-
-const createBackup = () => {
-  toast.add({ severity: 'info', summary: 'Backup Started', detail: 'Creating system backup...', life: 3000 })
-  setTimeout(() => {
-    lastBackupDate.value = new Date().toLocaleString()
-    toast.add({ severity: 'success', summary: 'Backup Complete', detail: 'System backup created successfully', life: 3000 })
-  }, 2000)
-}
-
-const editRole = (role) => {
-  toast.add({ severity: 'info', summary: 'Edit Role', detail: `Editing ${role.role} permissions`, life: 3000 })
-}
-
-const copyRole = (role) => {
-  toast.add({ severity: 'info', summary: 'Copy Role', detail: `Copying ${role.role} role`, life: 3000 })
-}
-
-const saveSettings = () => {
-  console.log('Saving settings:', {
-    general: generalSettings.value,
-    lease: leaseSettings.value,
-    user: userSettings.value,
-    security: securitySettings.value,
-    notification: notificationSettings.value,
-    backup: backupSettings.value
-  })
-  toast.add({ severity: 'success', summary: 'Settings Saved', detail: 'All settings have been saved successfully', life: 3000 })
-}
-
-const resetSettings = () => {
-  toast.add({ severity: 'warn', summary: 'Cancelled', detail: 'Changes were not saved', life: 3000 })
-}
-
-const confirmDeleteAll = () => {
-  confirm.require({
-    message: 'This action will permanently delete ALL system data. This cannot be undone. Are you absolutely sure?',
-    header: 'Danger Zone',
-    icon: 'pi pi-exclamation-triangle',
-    acceptClass: 'p-button-danger',
-    accept: () => {
-      toast.add({ severity: 'error', summary: 'Data Deleted', detail: 'All system data has been deleted', life: 5000 })
+<script>
+export default {
+  name: 'Settings',
+  data() {
+    return {
+      activeTab: 'general',
+      tabs: [
+        { key: 'general', label: 'General', icon: 'pi pi-sliders-h' },
+        { key: 'lease', label: 'Lease', icon: 'pi pi-file' },
+        { key: 'security', label: 'Security', icon: 'pi pi-shield' },
+        { key: 'backup', label: 'Backup', icon: 'pi pi-database' }
+      ],
+      // General Settings
+      generalSettings: {
+        systemName: 'Ramani Land Management System',
+        theme: 'Light',
+        language: 'English',
+        dateFormat: 'DD/MM/YYYY',
+        timezone: 'Africa/Nairobi',
+        currency: 'KES',
+        itemsPerPage: 25,
+        compactMode: false,
+        showEmptyFields: true
+      },
+      // Lease Settings
+      leaseSettings: {
+        defaultPaymentCycle: 'Annually',
+        defaultDuration: 5,
+        autoGenerateId: true,
+        idPrefix: 'L-',
+        enableLateFees: true,
+        lateFeePercentage: 5,
+        gracePeriod: 7
+      },
+      // Security Settings
+      securitySettings: {
+        minPasswordLength: 8,
+        passwordExpiry: 90,
+        requireUppercase: true,
+        requireNumbers: true,
+        requireSpecialChars: true,
+        sessionTimeout: 30,
+        twoFactorAuth: false
+      },
+      // Backup Settings
+      backupSettings: {
+        autoBackup: true,
+        frequency: 'Weekly',
+        retention: 30
+      },
+      lastBackupDate: null
     }
-  })
+  },
+  methods: {
+    createBackup() {
+      this.lastBackupDate = new Date().toLocaleString()
+      alert('Backup created successfully!')
+    },
+    saveSettings() {
+      console.log('Saving settings:', {
+        general: this.generalSettings,
+        lease: this.leaseSettings,
+        security: this.securitySettings,
+        backup: this.backupSettings
+      })
+      alert('Settings saved successfully!')
+    },
+    resetSettings() {
+      alert('Changes were not saved')
+    },
+    confirmDeleteAll() {
+      if (confirm('WARNING: This will delete ALL data. This cannot be undone. Are you sure?')) {
+        alert('All data has been deleted')
+      }
+    }
+  }
 }
 </script>
 
 <style scoped>
-:deep(.p-tabview-nav) {
-  background-color: white;
-  border-bottom: 1px solid #e5e7eb;
+.settings-container {
+  padding: 24px;
+  background: #f5f7fa;
+  min-height: 100vh;
 }
 
-:deep(.p-tabview-nav li .p-tabview-nav-link) {
-  color: #4b5563;
-  padding: 1rem 1.5rem;
+.settings-header {
+  margin-bottom: 24px;
 }
 
-:deep(.p-tabview-nav li.p-highlight .p-tabview-nav-link) {
-  color: #3b82f6;
-  border-bottom: 2px solid #3b82f6;
-}
-
-:deep(.p-datatable .p-datatable-thead > tr > th) {
-  background-color: #f9fafb;
-  color: #374151;
+.settings-title {
+  font-size: 24px;
   font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+.settings-subtitle {
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+.settings-tabs {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.tabs-header {
+  display: flex;
+  gap: 4px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  padding: 0 16px;
+}
+
+.tab-btn {
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #6c757d;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 2px solid transparent;
+}
+
+.tab-btn:hover {
+  color: #4CAF50;
+}
+
+.tab-btn.active {
+  color: #4CAF50;
+  border-bottom-color: #4CAF50;
+}
+
+.tabs-content {
+  padding: 24px;
+}
+
+.settings-section {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.settings-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.settings-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.setting-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.setting-field label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #495057;
+}
+
+.setting-input,
+.setting-select {
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.setting-input:focus,
+.setting-select:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+.checkbox-field {
+  flex-direction: row;
+  align-items: center;
+}
+
+.checkbox-field label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  padding: 8px 16px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background: #45a049;
+}
+
+.btn-secondary {
+  padding: 8px 16px;
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+}
+
+.btn-danger {
+  padding: 8px 16px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.btn-danger:hover {
+  background: #c82333;
+}
+
+.danger-zone {
+  background: #fff5f5;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #fcc;
+}
+
+.danger-zone h3 {
+  color: #dc3545;
+}
+
+.backup-info {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #6c757d;
+}
+
+.settings-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+}
+
+@media (max-width: 768px) {
+  .settings-container {
+    padding: 16px;
+  }
+  
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tabs-header {
+    overflow-x: auto;
+  }
+  
+  .tab-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
 }
 </style>
