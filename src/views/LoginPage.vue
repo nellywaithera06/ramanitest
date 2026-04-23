@@ -21,9 +21,9 @@ const confirmNewPassword = ref('')
 const loading = ref(false)
 const errorMessage = ref('')
 const successMessage = ref('')
-const resetStep = ref(1) // 1: request reset, 2: verify & reset
+const resetStep = ref(1)
 
-// Handle Login - Uses ONLY your registered credentials
+// Handle Login
 const handleLogin = async () => {
   errorMessage.value = ''
   
@@ -148,10 +148,8 @@ const requestPasswordReset = () => {
       return
     }
     
-    // Generate a random 6-digit reset code
     const generatedCode = Math.floor(100000 + Math.random() * 900000).toString()
     
-    // Store reset code temporarily (in real app, this would be emailed)
     localStorage.setItem('resetCode_' + resetEmail.value, generatedCode)
     localStorage.setItem('resetEmail_' + resetEmail.value, resetEmail.value)
     
@@ -205,20 +203,17 @@ const verifyAndResetPassword = () => {
       return
     }
     
-    // Update user's password
     const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '{}')
     
     if (registeredUsers[resetEmail.value]) {
       registeredUsers[resetEmail.value].password = newPassword.value
       localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers))
       
-      // Clear reset session data
       localStorage.removeItem('resetCode_' + resetEmail.value)
       localStorage.removeItem('resetEmail_' + resetEmail.value)
       
       successMessage.value = 'Password reset successfully! Please login with your new password.'
       
-      // Reset forgot password form and go back to login
       setTimeout(() => {
         isForgotPasswordMode.value = false
         resetStep.value = 1
@@ -235,7 +230,6 @@ const verifyAndResetPassword = () => {
   }, 500)
 }
 
-// Toggle between login and register
 const toggleMode = () => {
   isLoginMode.value = !isLoginMode.value
   isForgotPasswordMode.value = false
@@ -252,7 +246,6 @@ const toggleMode = () => {
   confirmNewPassword.value = ''
 }
 
-// Open forgot password modal
 const openForgotPassword = () => {
   isForgotPasswordMode.value = true
   errorMessage.value = ''
@@ -264,7 +257,6 @@ const openForgotPassword = () => {
   confirmNewPassword.value = ''
 }
 
-// Close forgot password and go back to login
 const closeForgotPassword = () => {
   isForgotPasswordMode.value = false
   resetStep.value = 1
@@ -276,7 +268,6 @@ const closeForgotPassword = () => {
   confirmNewPassword.value = ''
 }
 
-// Check if already logged in
 const checkAuth = () => {
   const isAuthenticated = localStorage.getItem('isAuthenticated')
   if (isAuthenticated === 'true') {
@@ -291,21 +282,42 @@ checkAuth()
   <div class="min-h-screen flex">
     <!-- LEFT SIDE (IMAGE SECTION) -->
     <div class="hidden md:flex w-1/2 relative">
+      <!-- Sunset over Farmland -->
       <img
-        src="https://images.unsplash.com/photo-1549887534-3ec93abae7a5"
+        src="https://images.pexels.com/photos/1566124/pexels-photo-1566124.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        alt="Sunset over farmland - Beautiful landscape"
         class="absolute inset-0 w-full h-full object-cover"
+        onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200'"
       />
-      <div class="absolute inset-0 bg-blue-900/70"></div>
+      
+      <div class="absolute inset-0 bg-gradient-to-br from-blue-900/75 to-green-900/75"></div>
       <div class="relative z-10 text-white p-12 flex flex-col justify-between h-full">
-        <div class="text-xl font-bold tracking-wide">Ramani</div>
+        <div class="flex items-center gap-2">
+          <span class="text-3xl">🌍</span>
+          <div class="text-2xl font-bold tracking-wide">Ramani</div>
+        </div>
         <div>
           <h2 class="text-4xl font-bold mb-4 leading-tight">
-            Partnership for <br />
-            Business Growth
+            Smart Land<br />
+            Management Solution
           </h2>
-          <p class="text-sm text-gray-200 max-w-md">
-            Overview of all the land coverage you have within your conservancy tied to your lease agreements
+          <p class="text-base text-gray-200 max-w-md leading-relaxed">
+            Digitize your land records, manage leases efficiently, and track beneficiaries all in one platform.
           </p>
+          <div class="mt-8 flex gap-6">
+            <div>
+              <div class="text-2xl font-bold">10K+</div>
+              <div class="text-xs text-gray-300">Land Parcels</div>
+            </div>
+            <div>
+              <div class="text-2xl font-bold">500+</div>
+              <div class="text-xs text-gray-300">Happy Clients</div>
+            </div>
+            <div>
+              <div class="text-2xl font-bold">99.9%</div>
+              <div class="text-xs text-gray-300">Uptime</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -390,7 +402,6 @@ checkAuth()
               @click="isLoginMode ? handleLogin() : handleRegister()"
             />
 
-            <!-- Forgot Password Link -->
             <div v-if="isLoginMode" class="text-center">
               <a href="#" class="text-sm text-blue-600 hover:text-blue-800 hover:underline" @click.prevent="openForgotPassword">
                 Forgot Password?
@@ -424,7 +435,6 @@ checkAuth()
           </div>
 
           <div class="space-y-4">
-            <!-- Step 1: Request Reset Code -->
             <template v-if="resetStep === 1">
               <div class="relative">
                 <i class="pi pi-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10"></i>
@@ -445,7 +455,6 @@ checkAuth()
               />
             </template>
 
-            <!-- Step 2: Verify Code and Reset Password -->
             <template v-else>
               <div class="relative">
                 <i class="pi pi-key absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10"></i>
