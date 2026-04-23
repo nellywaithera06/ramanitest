@@ -653,10 +653,10 @@ export default {
 
 .modal-container {
   background: white;
-  border-radius: 12px;
+  border-radius: 10px;
   width: 90%;
-  max-width: 500px;
-  max-height: 90vh;
+  max-width: 450px;
+  max-height: 85vh;
   overflow-y: auto;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   animation: modalSlideIn 0.3s ease;
@@ -664,7 +664,7 @@ export default {
 
 @keyframes modalSlideIn {
   from {
-    transform: translateY(-50px);
+    transform: translateY(-30px);
     opacity: 0;
   }
   to {
@@ -674,7 +674,7 @@ export default {
 }
 
 .modal-header {
-  padding: 20px 24px;
+  padding: 14px 20px;
   border-bottom: 1px solid #e9ecef;
   display: flex;
   justify-content: space-between;
@@ -683,14 +683,14 @@ export default {
 
 .modal-header h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
   color: #2c3e50;
 }
 
 .modal-close {
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 22px;
   cursor: pointer;
   color: #999;
   transition: color 0.3s;
@@ -701,19 +701,19 @@ export default {
 }
 
 .modal-body {
-  padding: 24px;
+  padding: 20px;
   text-align: center;
 }
 
 .confirmation-icon {
-  width: 70px;
-  height: 70px;
-  margin: 0 auto 20px;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 16px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
+  font-size: 28px;
 }
 
 .confirmation-icon.success {
@@ -732,69 +732,77 @@ export default {
 }
 
 .modal-body h4 {
-  margin: 0 0 10px;
-  font-size: 20px;
+  margin: 0 0 8px;
+  font-size: 18px;
   color: #2c3e50;
 }
 
 .modal-body p {
   color: #6c757d;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+  font-size: 12px;
 }
 
 .changes-summary {
   background: #f8f9fa;
-  padding: 15px;
+  padding: 12px;
   border-radius: 8px;
   text-align: left;
-  margin-top: 15px;
+  margin-top: 12px;
+}
+
+.changes-summary p {
+  font-size: 12px;
+  margin-bottom: 8px;
 }
 
 .changes-summary ul {
-  margin: 10px 0 0 20px;
+  margin: 5px 0 0 18px;
   color: #495057;
+  font-size: 11px;
 }
 
 .changes-summary li {
-  margin: 5px 0;
+  margin: 4px 0;
 }
 
 .delete-list {
   text-align: left;
-  margin: 15px 0;
+  margin: 12px 0;
   color: #dc3545;
+  font-size: 12px;
 }
 
 .delete-list li {
-  margin: 5px 0;
+  margin: 4px 0;
 }
 
 .confirmation-input {
-  margin-top: 20px;
+  margin-top: 16px;
   text-align: left;
 }
 
 .confirmation-input label {
   display: block;
-  margin-bottom: 8px;
-  font-size: 14px;
+  margin-bottom: 6px;
+  font-size: 12px;
   color: #495057;
 }
 
 .confirmation-input input {
   width: 100%;
-  padding: 10px;
+  padding: 8px 12px;
   border: 1px solid #ced4da;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .modal-footer {
-  padding: 16px 24px;
+  padding: 12px 20px;
   border-top: 1px solid #e9ecef;
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
+  gap: 10px;
 }
 
 /* Toast Notification */
@@ -805,15 +813,15 @@ export default {
   background: white;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  padding: 16px 20px;
+  padding: 12px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-width: 300px;
-  max-width: 400px;
+  min-width: 280px;
+  max-width: 360px;
   z-index: 1100;
   animation: slideInRight 0.3s ease;
-  border-left: 4px solid;
+  border-left: 3px solid;
 }
 
 .toast-notification.success {
@@ -831,11 +839,11 @@ export default {
 .toast-content {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .toast-content i {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -852,24 +860,24 @@ export default {
 }
 
 .toast-content h4 {
-  margin: 0 0 4px;
-  font-size: 16px;
+  margin: 0 0 2px;
+  font-size: 14px;
   color: #2c3e50;
 }
 
 .toast-content p {
   margin: 0;
-  font-size: 13px;
+  font-size: 11px;
   color: #6c757d;
 }
 
 .toast-close {
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 18px;
   cursor: pointer;
   color: #999;
-  margin-left: 15px;
+  margin-left: 12px;
 }
 
 .toast-close:hover {
@@ -887,55 +895,55 @@ export default {
   }
 }
 
-/* Rest of existing styles */
+/* Main Settings Styles - REDUCED SIZE */
 .settings-container {
-  padding: 24px;
+  padding: 20px;
   background: #f5f7fa;
   min-height: 100vh;
 }
 
 .settings-header {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .settings-title {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 600;
   color: #2c3e50;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .settings-subtitle {
   color: #7f8c8d;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .settings-tabs {
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   overflow: hidden;
 }
 
 .tabs-header {
   display: flex;
-  gap: 4px;
+  gap: 2px;
   background: #f8f9fa;
   border-bottom: 1px solid #e9ecef;
-  padding: 0 16px;
+  padding: 0 12px;
 }
 
 .tab-btn {
-  padding: 12px 20px;
+  padding: 10px 16px;
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
   color: #6c757d;
   transition: all 0.3s;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   border-bottom: 2px solid transparent;
 }
 
@@ -949,12 +957,12 @@ export default {
 }
 
 .tabs-content {
-  padding: 24px;
+  padding: 20px;
 }
 
 .settings-section {
-  margin-bottom: 32px;
-  padding-bottom: 24px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
   border-bottom: 1px solid #e9ecef;
 }
 
@@ -965,36 +973,36 @@ export default {
 }
 
 .settings-section h3 {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #2c3e50;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .settings-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
 }
 
 .setting-field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .setting-field label {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   color: #495057;
 }
 
 .setting-input,
 .setting-select {
-  padding: 8px 12px;
+  padding: 6px 10px;
   border: 1px solid #ced4da;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 12px;
   transition: border-color 0.3s;
 }
 
@@ -1014,38 +1022,39 @@ export default {
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  font-size: 12px;
 }
 
 .field-hint {
-  font-size: 11px;
+  font-size: 10px;
   color: #6c757d;
-  margin-top: 4px;
+  margin-top: 3px;
 }
 
 .format-preview {
-  margin-top: 8px;
-  padding: 6px 10px;
+  margin-top: 6px;
+  padding: 4px 8px;
   background: #f8f9fa;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 11px;
   color: #28a745;
-  border-left: 3px solid #28a745;
+  border-left: 2px solid #28a745;
 }
 
 .button-group {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
 .btn-primary {
-  padding: 8px 16px;
+  padding: 6px 14px;
   background: #4CAF50;
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
   transition: background 0.3s;
 }
 
@@ -1059,13 +1068,13 @@ export default {
 }
 
 .btn-secondary {
-  padding: 8px 16px;
+  padding: 6px 14px;
   background: #6c757d;
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
   transition: background 0.3s;
 }
 
@@ -1074,13 +1083,13 @@ export default {
 }
 
 .btn-danger {
-  padding: 8px 16px;
+  padding: 6px 14px;
   background: #dc3545;
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
   transition: background 0.3s;
 }
 
@@ -1095,33 +1104,35 @@ export default {
 
 .danger-zone {
   background: #fff5f5;
-  padding: 20px;
+  padding: 16px;
   border-radius: 8px;
   border: 1px solid #fcc;
 }
 
 .danger-zone h3 {
   color: #dc3545;
+  font-size: 14px;
+  margin-bottom: 12px;
 }
 
 .backup-info {
-  margin-top: 12px;
-  font-size: 13px;
+  margin-top: 10px;
+  font-size: 11px;
   color: #6c757d;
 }
 
 .settings-actions {
-  margin-top: 24px;
+  margin-top: 20px;
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
-  padding-top: 20px;
+  gap: 10px;
+  padding-top: 16px;
   border-top: 1px solid #e9ecef;
 }
 
 @media (max-width: 768px) {
   .settings-container {
-    padding: 16px;
+    padding: 12px;
   }
   
   .settings-grid {
@@ -1133,18 +1144,18 @@ export default {
   }
   
   .tab-btn {
-    padding: 10px 16px;
-    font-size: 13px;
+    padding: 8px 12px;
+    font-size: 11px;
   }
   
   .modal-container {
     width: 95%;
-    margin: 20px;
+    margin: 16px;
   }
   
   .toast-notification {
-    left: 20px;
-    right: 20px;
+    left: 16px;
+    right: 16px;
     min-width: auto;
   }
 }

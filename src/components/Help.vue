@@ -427,7 +427,6 @@ export default {
       }
     },
     downloadDoc(docType) {
-      // Simulate download - in production, these would be actual file URLs
       alert(`Downloading ${docType}...\n\nIn production, this would download the actual PDF file.`)
     },
     showLegalModal(type) {
@@ -517,7 +516,6 @@ export default {
     }
   },
   mounted() {
-    // Initialize openFaqs object
     this.faqs.forEach((_, index) => {
       this.$set(this.openFaqs, index, false)
     })
@@ -527,99 +525,99 @@ export default {
 
 <style scoped>
 .help-container {
-  padding: 24px;
+  padding: 20px;
   background: #f5f7fa;
   min-height: 100vh;
 }
 
 .help-header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .help-title {
-  font-size: 32px;
+  font-size: 24px;
   color: #2c3e50;
-  margin: 0 0 8px 0;
+  margin: 0 0 6px 0;
 }
 
 .help-subtitle {
   color: #7f8c8d;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 /* Search Section */
 .search-section {
-  max-width: 600px;
-  margin: 0 auto 32px;
+  max-width: 500px;
+  margin: 0 auto 24px;
 }
 
 .search-box-large {
   display: flex;
   align-items: center;
   background: white;
-  border: 2px solid #e0e0e0;
-  border-radius: 50px;
-  padding: 12px 20px;
-  gap: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 40px;
+  padding: 8px 16px;
+  gap: 10px;
   transition: all 0.3s;
 }
 
 .search-box-large:focus-within {
   border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
 }
 
 .search-box-large i {
   color: #999;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .search-box-large input {
   flex: 1;
   border: none;
   outline: none;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 /* Categories Grid */
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  margin-bottom: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
 }
 
 .category-card {
   background: white;
-  padding: 20px;
-  border-radius: 12px;
+  padding: 14px;
+  border-radius: 10px;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
 }
 
 .category-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
 .category-card i {
-  font-size: 32px;
+  font-size: 24px;
   color: #667eea;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   display: inline-block;
 }
 
 .category-card h3 {
-  font-size: 16px;
-  margin: 0 0 8px 0;
+  font-size: 13px;
+  margin: 0 0 4px 0;
   color: #2c3e50;
 }
 
 .category-card p {
-  font-size: 12px;
+  font-size: 10px;
   color: #7f8c8d;
   margin: 0;
 }
@@ -627,28 +625,28 @@ export default {
 /* Help Sections */
 .help-section {
   background: white;
-  border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 24px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
 }
 
 .section-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 24px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid #f0f0f0;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .section-icon {
-  font-size: 24px;
+  font-size: 20px;
   color: #667eea;
 }
 
 .section-header h2 {
-  font-size: 20px;
+  font-size: 16px;
   color: #2c3e50;
   margin: 0;
 }
@@ -656,7 +654,7 @@ export default {
 /* Guides */
 .guides-grid {
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .guide-card {
@@ -669,8 +667,8 @@ export default {
 .guide-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px;
+  gap: 10px;
+  padding: 12px;
   background: #fafafa;
   transition: background 0.2s;
 }
@@ -681,18 +679,19 @@ export default {
 
 .guide-header i:first-child {
   color: #667eea;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .guide-header h4 {
   flex: 1;
   margin: 0;
-  font-size: 14px;
+  font-size: 13px;
   color: #2c3e50;
 }
 
 .guide-header .pi-chevron-down {
   transition: transform 0.3s;
+  font-size: 12px;
 }
 
 .guide-header .pi-chevron-down.rotated {
@@ -700,30 +699,30 @@ export default {
 }
 
 .guide-content {
-  padding: 16px;
+  padding: 12px;
   background: white;
   border-top: 1px solid #e0e0e0;
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .guide-content ul, .guide-content ol {
-  margin: 0 0 12px 0;
-  padding-left: 20px;
+  margin: 0 0 10px 0;
+  padding-left: 18px;
 }
 
 .guide-content li {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .tip-box {
   background: #e8f5e9;
-  padding: 12px;
+  padding: 10px;
   border-radius: 6px;
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: 11px;
   color: #2e7d32;
 }
 
@@ -742,25 +741,26 @@ export default {
 .faq-question {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px;
+  gap: 10px;
+  padding: 12px;
   background: #fafafa;
 }
 
 .faq-question i:first-child {
   color: #ff9800;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .faq-question span {
   flex: 1;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: #2c3e50;
 }
 
 .faq-question .pi-chevron-down {
   transition: transform 0.3s;
+  font-size: 12px;
 }
 
 .faq-question .pi-chevron-down.rotated {
@@ -768,25 +768,25 @@ export default {
 }
 
 .faq-answer {
-  padding: 16px;
+  padding: 12px;
   background: white;
   border-top: 1px solid #e0e0e0;
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 12px;
+  line-height: 1.5;
   color: #555;
 }
 
 /* Roles Grid */
 .roles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
 }
 
 .role-card {
-  padding: 20px;
-  border-radius: 10px;
-  border-left: 4px solid;
+  padding: 16px;
+  border-radius: 8px;
+  border-left: 3px solid;
 }
 
 .role-card.admin-role {
@@ -805,90 +805,90 @@ export default {
 }
 
 .role-icon {
-  font-size: 32px;
-  margin-bottom: 12px;
+  font-size: 28px;
+  margin-bottom: 10px;
 }
 
 .role-card h3 {
-  font-size: 18px;
-  margin: 0 0 8px 0;
+  font-size: 15px;
+  margin: 0 0 6px 0;
   color: #2c3e50;
 }
 
 .role-card p {
-  font-size: 12px;
+  font-size: 11px;
   color: #666;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .role-card ul {
   margin: 0;
-  padding-left: 20px;
-  font-size: 12px;
+  padding-left: 18px;
+  font-size: 11px;
 }
 
 .role-card li {
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 
 /* Support Grid */
 .support-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
 }
 
 .support-card {
   text-align: center;
-  padding: 24px;
+  padding: 16px;
   background: #f9f9f9;
-  border-radius: 10px;
+  border-radius: 8px;
   transition: transform 0.2s;
 }
 
 .support-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-2px);
 }
 
 .support-card i {
-  font-size: 36px;
+  font-size: 28px;
   color: #667eea;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   display: inline-block;
 }
 
 .support-card h3 {
-  font-size: 16px;
-  margin: 0 0 12px 0;
+  font-size: 14px;
+  margin: 0 0 8px 0;
   color: #2c3e50;
 }
 
 .support-card a, .phone-number {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   color: #667eea;
   text-decoration: none;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   display: inline-block;
 }
 
 .support-card p {
-  font-size: 12px;
+  font-size: 10px;
   color: #7f8c8d;
-  margin: 4px 0;
+  margin: 3px 0;
 }
 
 /* Documentation */
 .docs-grid {
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .doc-card {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 16px;
+  gap: 12px;
+  padding: 12px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   transition: all 0.2s;
@@ -900,7 +900,7 @@ export default {
 }
 
 .doc-card i {
-  font-size: 32px;
+  font-size: 28px;
   color: #f44336;
 }
 
@@ -909,29 +909,29 @@ export default {
 }
 
 .doc-info h4 {
-  font-size: 14px;
-  margin: 0 0 4px 0;
+  font-size: 13px;
+  margin: 0 0 3px 0;
   color: #2c3e50;
 }
 
 .doc-info p {
-  font-size: 12px;
+  font-size: 11px;
   color: #666;
-  margin: 0 0 4px 0;
+  margin: 0 0 3px 0;
 }
 
 .file-size {
-  font-size: 11px;
+  font-size: 10px;
   color: #999;
 }
 
 .download-btn {
-  padding: 6px 16px;
+  padding: 5px 12px;
   background: #667eea;
   color: white;
   border: none;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 11px;
   cursor: pointer;
   transition: background 0.2s;
 }
@@ -943,11 +943,11 @@ export default {
 /* Releases */
 .releases-list {
   display: grid;
-  gap: 16px;
+  gap: 12px;
 }
 
 .release-card {
-  padding: 16px;
+  padding: 14px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
 }
@@ -955,26 +955,26 @@ export default {
 .release-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 10px;
+  margin-bottom: 10px;
   flex-wrap: wrap;
 }
 
 .version {
   font-weight: bold;
-  font-size: 14px;
+  font-size: 13px;
   color: #2c3e50;
 }
 
 .date {
-  font-size: 12px;
+  font-size: 11px;
   color: #999;
 }
 
 .badge {
   padding: 2px 8px;
   border-radius: 12px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
 }
 
@@ -999,34 +999,34 @@ export default {
 }
 
 .release-card h4 {
-  font-size: 14px;
-  margin: 0 0 12px 0;
+  font-size: 13px;
+  margin: 0 0 10px 0;
   color: #2c3e50;
 }
 
 .release-card ul {
   margin: 0;
-  padding-left: 20px;
-  font-size: 12px;
+  padding-left: 18px;
+  font-size: 11px;
 }
 
 .release-card li {
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   color: #555;
 }
 
 /* Legal Grid */
 .legal-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
 }
 
 .legal-card {
-  padding: 20px;
+  padding: 14px;
   text-align: center;
   background: #f9f9f9;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -1037,20 +1037,20 @@ export default {
 }
 
 .legal-card i {
-  font-size: 32px;
+  font-size: 24px;
   color: #667eea;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   display: inline-block;
 }
 
 .legal-card h3 {
-  font-size: 14px;
-  margin: 0 0 8px 0;
+  font-size: 12px;
+  margin: 0 0 6px 0;
   color: #2c3e50;
 }
 
 .legal-card p {
-  font-size: 11px;
+  font-size: 10px;
   color: #7f8c8d;
   margin: 0;
 }
@@ -1071,41 +1071,89 @@ export default {
 
 .legal-modal {
   background: white;
-  border-radius: 12px;
-  width: 500px;
+  border-radius: 10px;
+  width: 450px;
   max-width: 90%;
   max-height: 80vh;
   display: flex;
   flex-direction: column;
 }
 
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #2c3e50;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #999;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
 .modal-body {
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
-  font-size: 13px;
-  line-height: 1.6;
+  padding: 18px;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .modal-body h4 {
   color: #2c3e50;
-  margin: 16px 0 8px 0;
-  font-size: 14px;
+  margin: 12px 0 6px 0;
+  font-size: 13px;
 }
 
 .modal-body p {
-  margin: 0 0 12px 0;
+  margin: 0 0 10px 0;
   color: #555;
+}
+
+.modal-footer {
+  padding: 12px 18px;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-primary {
+  padding: 6px 14px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background: #45a049;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .help-container {
-    padding: 16px;
+    padding: 12px;
   }
   
   .help-title {
-    font-size: 24px;
+    font-size: 20px;
   }
   
   .categories-grid {
@@ -1126,6 +1174,10 @@ export default {
   .release-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+  
+  .legal-modal {
+    width: 95%;
   }
 }
 </style>
