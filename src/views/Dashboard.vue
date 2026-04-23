@@ -86,7 +86,7 @@
 
         <!-- User Management -->
         <div class="nav-item" :class="{ active: currentView === 'userManagement' }" @click="currentView = 'userManagement'">
-          <i class="pi pi-user nav-icon"></i>
+          <i class="pi pi-users nav-icon"></i>
           <span class="nav-label" v-if="!isSidebarCollapsed">User Management</span>
         </div>
 
@@ -116,7 +116,7 @@
           </div>
           <div class="user-info">
             <div class="avatar">
-              <img src="https://ui-avatars.com/api/?background=4CAF50&color=fff&name={{userName}}" alt="Avatar" class="avatar-img">
+              <img :src="`https://ui-avatars.com/api/?background=4CAF50&color=fff&name=${userName}`" alt="Avatar" class="avatar-img">
             </div>
             <span class="user-name">Welcome, {{ userName }}</span>
             <button @click="handleLogout" class="logout-btn">Logout</button>
@@ -251,8 +251,11 @@
       <!-- Master Map View -->
       <MasterMap v-else-if="currentView === 'masterMap'" />
 
-      <!-- Settings View - LINKED -->
+      <!-- Settings View -->
       <Settings v-else-if="currentView === 'settings'" />
+
+      <!-- User Management View -->
+      <UserManagement v-else-if="currentView === 'userManagement'" />
 
       <!-- Other Views -->
       <LeaseManagement v-else-if="currentView === 'lease'" />
@@ -283,6 +286,7 @@ import Parcels from '../components/Parcels.vue'
 import Conservancies from '../components/Conservancies.vue'
 import MasterMap from '../components/MasterMap.vue'
 import Settings from '../components/Settings.vue'
+import UserManagement from '../components/UserManagement.vue'
 import Chart from 'chart.js/auto'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -305,7 +309,8 @@ export default {
     Parcels,
     Conservancies,
     MasterMap,
-    Settings  // REGISTER SETTINGS COMPONENT
+    Settings,
+    UserManagement
   },
   data() {
     return {
