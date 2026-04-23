@@ -104,7 +104,7 @@
             <td colspan="7" class="no-data small-text">No users found</td>
           </tr>
         </tbody>
-       </table>
+      </table>
     </div>
 
     <!-- Add/Edit User Modal -->
@@ -363,62 +363,62 @@ export default {
   margin: 0;
 }
 
-/* Stats Grid */
+/* Stats Grid - REDUCED SIZE */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
   margin-bottom: 20px;
 }
 
 .stat-card {
   background: white;
-  padding: 16px;
-  border-radius: 10px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  padding: 10px 12px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   transition: all 0.2s;
   cursor: pointer;
 }
 
 .stat-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
 }
 
 .stat-card.active {
-  border: 2px solid #667eea;
+  border: 1px solid #667eea;
   background: linear-gradient(135deg, #f5f3ff 0%, #fff 100%);
 }
 
 .stat-icon {
-  font-size: 36px;
+  font-size: 24px;
 }
 
 .stat-info h3 {
-  font-size: 24px;
+  font-size: 18px;
   margin: 0;
   color: #2c3e50;
 }
 
 .stat-info p {
-  margin: 4px 0 0;
+  margin: 2px 0 0;
   color: #7f8c8d;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 /* Filter Badge */
 .filter-badge {
   background: #e8eaf6;
-  padding: 8px 16px;
-  border-radius: 20px;
+  padding: 6px 12px;
+  border-radius: 16px;
   margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .filter-badge span {
@@ -431,9 +431,9 @@ export default {
   border: none;
   color: #f44336;
   cursor: pointer;
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 12px;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 10px;
 }
 
 .clear-filter:hover {
@@ -749,19 +749,19 @@ export default {
   
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 8px;
   }
   
   .stat-icon {
-    font-size: 28px;
-  }
-  
-  .stat-info h3 {
     font-size: 20px;
   }
   
+  .stat-info h3 {
+    font-size: 16px;
+  }
+  
   .stat-info p {
-    font-size: 10px;
+    font-size: 9px;
   }
   
   .action-bar {
