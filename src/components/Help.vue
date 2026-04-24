@@ -25,11 +25,6 @@
         <h3>FAQs</h3>
         <p>Common questions answered</p>
       </div>
-      <div class="category-card" @click="scrollToSection('troubleshooting')">
-        <i class="pi pi-wrench"></i>
-        <h3>Troubleshooting</h3>
-        <p>Fix common issues</p>
-      </div>
       <div class="category-card" @click="scrollToSection('support')">
         <i class="pi pi-headphones"></i>
         <h3>Contact Support</h3>
@@ -121,7 +116,7 @@
       </div>
     </section>
 
-    <!-- 4. User Role Explanations -->
+    <!-- 3. User Role Explanations -->
     <section id="user-roles" class="help-section">
       <div class="section-header">
         <i class="pi pi-users section-icon"></i>
@@ -167,7 +162,7 @@
       </div>
     </section>
 
-    <!-- 5. Technical Support Contact -->
+    <!-- 4. Technical Support Contact -->
     <section id="support" class="help-section">
       <div class="section-header">
         <i class="pi pi-headphones section-icon"></i>
@@ -202,7 +197,7 @@
       </div>
     </section>
 
-    <!-- 7. Documentation Downloads -->
+    <!-- 5. Documentation Downloads -->
     <section id="documentation" class="help-section">
       <div class="section-header">
         <i class="pi pi-download section-icon"></i>
@@ -239,7 +234,7 @@
       </div>
     </section>
 
-    <!-- 8. Release Notes / Changelog -->
+    <!-- 6. Release Notes / Changelog -->
     <section id="releases" class="help-section">
       <div class="section-header">
         <i class="pi pi-megaphone section-icon"></i>
@@ -260,7 +255,7 @@
       </div>
     </section>
 
-    <!-- 15. Legal & Compliance -->
+    <!-- 7. Legal & Compliance -->
     <section id="legal" class="help-section">
       <div class="section-header">
         <i class="pi pi-shield section-icon"></i>
