@@ -103,7 +103,7 @@
         <h2>Frequently Asked Questions</h2>
       </div>
       <div class="faq-list">
-        <div class="faq-item" v-for="(faq, index) in faqs" :key="index" @click="toggleFaq(index)">
+        <div class="faq-item" v-for="(faq, index) in filteredFaqs" :key="index" @click="toggleFaq(index)">
           <div class="faq-question">
             <i class="pi pi-question-circle"></i>
             <span>{{ faq.question }}</span>
@@ -413,7 +413,10 @@ export default {
       this.openGuides[guide] = !this.openGuides[guide]
     },
     toggleFaq(index) {
-      this.$set(this.openFaqs, index, !this.openFaqs[index])
+      // Toggle the value
+      this.openFaqs[index] = !this.openFaqs[index]
+      // Force reactivity by creating a new object reference
+      this.openFaqs = { ...this.openFaqs }
     },
     scrollToSection(sectionId) {
       const element = document.getElementById(sectionId)
@@ -511,8 +514,9 @@ export default {
     }
   },
   mounted() {
+    // Initialize openFaqs object - all FAQs start closed
     this.faqs.forEach((_, index) => {
-      this.$set(this.openFaqs, index, false)
+      this.openFaqs[index] = false
     })
   }
 }
