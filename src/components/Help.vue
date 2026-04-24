@@ -891,7 +891,7 @@ export default {
 
 .doc-card:hover {
   background: #f9f9f9;
-  border-color: #667eea;
+  border-color: #2f50e2;
 }
 
 .doc-card i {
