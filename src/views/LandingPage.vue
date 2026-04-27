@@ -263,6 +263,185 @@ Website: www.ramani.com
         </div>
       </section>
 
+      <!-- PRICING SECTION -->
+      <section class="px-6 md:px-10 py-16 bg-gray-50">
+        <div class="text-center mb-12">
+          <span class="text-green-600 font-semibold text-sm uppercase tracking-wide">Transparent Pricing</span>
+          <h3 class="text-3xl font-bold mt-2 mb-4">Simple Plans for Every Organization</h3>
+          <p class="text-gray-500 max-w-2xl mx-auto">Choose the perfect plan for your land management needs. All plans include core features.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          
+          <!-- STARTER PLAN -->
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+            <div class="p-8">
+              <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span class="text-2xl">🌱</span>
+                </div>
+                <h4 class="text-2xl font-bold text-gray-800">Starter</h4>
+                <p class="text-gray-500 text-sm mt-2">Perfect for small farms & individual land managers</p>
+              </div>
+              
+              <div class="text-center mb-6">
+                <span class="text-4xl font-bold text-gray-800">$99</span>
+                <span class="text-gray-500">/month</span>
+                <div class="text-sm text-green-600 mt-1">billed annually or $119 month-to-month</div>
+              </div>
+              
+              <ul class="space-y-3 mb-8">
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>Up to 500 land parcels</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>Basic titleholder management</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>5 user accounts included</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>Standard map view (non-interactive)</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>Email support (24hr response)</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-400">
+                  <i class="pi pi-minus-circle text-gray-300"></i>
+                  <span class="line-through">API access</span>
+                </li>
+              </ul>
+              
+              <Button label="Get Started" @click="goToLogin" class="!w-full !bg-gradient-to-r !from-blue-600 !to-blue-700 !border-none" />
+            </div>
+          </div>
+
+          <!-- PROFESSIONAL PLAN (POPULAR) -->
+          <div class="bg-white rounded-2xl shadow-2xl overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative border-2 border-green-500">
+            <div class="absolute top-0 right-0 bg-green-500 text-white px-4 py-1 text-sm font-semibold rounded-bl-lg">
+              🔥 Most Popular
+            </div>
+            <div class="p-8">
+              <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span class="text-2xl">🚀</span>
+                </div>
+                <h4 class="text-2xl font-bold text-gray-800">Professional</h4>
+                <p class="text-gray-500 text-sm mt-2">Ideal for growing land management firms</p>
+              </div>
+              
+              <div class="text-center mb-6">
+                <span class="text-4xl font-bold text-gray-800">$249</span>
+                <span class="text-gray-500">/month</span>
+                <div class="text-sm text-green-600 mt-1">billed annually or $299 month-to-month</div>
+              </div>
+              
+              <ul class="space-y-3 mb-8">
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>Up to 5,000 land parcels</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>Advanced titleholder management</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>20 user accounts included</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>✅ Interactive GIS mapping</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>Lease agreement tracking</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>Priority support (4hr response)</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>REST API access</span>
+                </li>
+              </ul>
+              
+              <Button label="Start Free Trial" @click="goToLogin" class="!w-full !bg-gradient-to-r !from-green-600 !to-blue-600 !border-none" />
+            </div>
+          </div>
+
+          <!-- ENTERPRISE PLAN -->
+          <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+            <div class="p-8">
+              <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span class="text-2xl">🏢</span>
+                </div>
+                <h4 class="text-2xl font-bold text-gray-800">Enterprise</h4>
+                <p class="text-gray-500 text-sm mt-2">For large organizations & government bodies</p>
+              </div>
+              
+              <div class="text-center mb-6">
+                <span class="text-4xl font-bold text-gray-800">Custom</span>
+                <div class="text-sm text-gray-500 mt-1">Tailored pricing based on needs</div>
+              </div>
+              
+              <ul class="space-y-3 mb-8">
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>Unlimited land parcels</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>Unlimited user accounts</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>Advanced GIS + custom layers</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>Dedicated account manager</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>24/7 phone & priority support</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>On-premise deployment option</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>SLA with 99.99% uptime</span>
+                </li>
+                <li class="flex items-center gap-2 text-sm text-gray-600">
+                  <i class="pi pi-check-circle text-green-500"></i>
+                  <span>Custom integrations & training</span>
+                </li>
+              </ul>
+              
+              <Button label="Contact Sales" @click="goToLogin" class="!w-full !bg-gradient-to-r !from-purple-600 !to-purple-700 !border-none" />
+            </div>
+          </div>
+        </div>
+
+        <!-- PRICING NOTE -->
+        <div class="text-center mt-10">
+          <p class="text-sm text-gray-500">
+            💡 All plans include a 14-day free trial. No credit card required.
+            <br />
+            Need a custom quote? <a href="#" @click.prevent="goToLogin" class="text-green-600 font-semibold hover:underline">Talk to our sales team</a>
+          </p>
+        </div>
+      </section>
+
       <!-- TESTIMONIAL + FORM SECTION -->
       <section class="bg-gradient-to-r from-gray-900 to-gray-800 text-white px-6 md:px-10 py-16 grid md:grid-cols-2 gap-12">
         <!-- TESTIMONIAL -->
