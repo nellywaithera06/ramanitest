@@ -1205,4 +1205,4 @@ export default {
     width: 260px;
   }
 }
-</style>
+</script>
