@@ -193,46 +193,56 @@ export default {
         this.conservancies = JSON.parse(savedConservancies)
         console.log('Loaded conservancies:', this.conservancies.length)
       } else {
-        // Default conservancies data
+        // Default conservancies data - now Kenyan conservancies
         this.conservancies = [
           {
             id: 1,
-            name: 'La Courneuve Conservancy',
-            location: 'La Courneuve',
-            size: '5,000 Ha',
-            established: '2010',
-            lat: 48.931,
-            lng: 2.396,
+            name: 'Ol Pejeta Conservancy',
+            location: 'Laikipia County',
+            size: '90,000 acres',
+            established: '2005',
+            lat: 0.002,
+            lng: 36.948,
             type: 'conservancy'
           },
           {
             id: 2,
-            name: 'Drancy Wildlife Area',
-            location: 'Drancy',
-            size: '3,200 Ha',
-            established: '2012',
-            lat: 48.925,
-            lng: 2.444,
+            name: 'Lewa Wildlife Conservancy',
+            location: 'Meru County',
+            size: '62,000 acres',
+            established: '1983',
+            lat: 0.214,
+            lng: 37.453,
             type: 'conservancy'
           },
           {
             id: 3,
-            name: 'Bobigny Nature Reserve',
-            location: 'Bobigny',
-            size: '4,500 Ha',
-            established: '2008',
-            lat: 48.910,
-            lng: 2.439,
+            name: 'Maasai Mara National Reserve',
+            location: 'Narok County',
+            size: '583,000 acres',
+            established: '1961',
+            lat: -1.493,
+            lng: 35.143,
             type: 'conservancy'
           },
           {
             id: 4,
-            name: 'Bondy Conservation',
-            location: 'Bondy',
-            size: '2,800 Ha',
-            established: '2015',
-            lat: 48.902,
-            lng: 2.483,
+            name: 'Amboseli National Park',
+            location: 'Kajiado County',
+            size: '392,000 acres',
+            established: '1974',
+            lat: -2.640,
+            lng: 37.248,
+            type: 'conservancy'
+          },
+          {
+            id: 5,
+            name: 'Tsavo East National Park',
+            location: 'Taita-Taveta County',
+            size: '5,300,000 acres',
+            established: '1948',
+            lat: -2.778,
+            lng: 38.772,
             type: 'conservancy'
           }
         ]
@@ -263,8 +273,9 @@ export default {
       
       this.map = L.map('masterMap').setView([centerLat, centerLng], 6)
       
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'
+      // FIXED: Switched from CartoDB to OpenStreetMap (No API Key Required)
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(this.map)
       
       this.addAllMarkers()

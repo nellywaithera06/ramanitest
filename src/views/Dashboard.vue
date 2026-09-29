@@ -78,7 +78,7 @@
           </div>
         </div>
 
-        <!-- Settings - LINKED -->
+        <!-- Settings -->
         <div class="nav-item" :class="{ active: currentView === 'settings' }" @click="currentView = 'settings'">
           <i class="pi pi-cog nav-icon"></i>
           <span class="nav-label" v-if="!isSidebarCollapsed">Settings</span>
@@ -123,7 +123,6 @@
           </div>
         </div>
 
-        <!-- Stats Cards with Icons -->
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-icon">🌾</div>
@@ -155,7 +154,6 @@
           </div>
         </div>
 
-        <!-- Map View and Legend Row -->
         <div class="two-columns">
           <div class="card">
             <h3>🗺️ Map view</h3>
@@ -181,7 +179,6 @@
           </div>
         </div>
 
-        <!-- Pie Chart and Lease Agreements Row -->
         <div class="two-columns">
           <div class="card">
             <h3>📊 Camp Distribution - Pie Chart</h3>
@@ -248,19 +245,10 @@
         </div>
       </div>
 
-      <!-- Master Map View -->
       <MasterMap v-else-if="currentView === 'masterMap'" />
-
-      <!-- Settings View -->
       <Settings v-else-if="currentView === 'settings'" />
-
-      <!-- User Management View -->
       <UserManagement v-else-if="currentView === 'userManagement'" />
-
-      <!-- Help View -->
       <Help v-else-if="currentView === 'help'" />
-
-      <!-- Other Views -->
       <LeaseManagement v-else-if="currentView === 'lease'" />
       <LeaseHolders v-else-if="currentView === 'leaseHolders'" />
       <Documents v-else-if="currentView === 'documents'" />
@@ -295,7 +283,6 @@ import Chart from 'chart.js/auto'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
-// Fix for default marker icons in Leaflet
 delete L.Icon.Default.prototype._getIconUrl
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
@@ -391,14 +378,11 @@ export default {
     initDashboardMap() {
       const mapElement = document.getElementById('dashboardMap');
       if (mapElement && !this.dashboardMap) {
-        // Center on Africa/Kenya
         this.dashboardMap = L.map('dashboardMap').setView([-1.283333, 36.816667], 6);
-        
         L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'
         }).addTo(this.dashboardMap);
         
-        // Add sample markers for demonstration
         const sampleLocations = [
           { lat: -1.283333, lng: 36.816667, name: 'Nairobi - Central Hub', type: 'parcel' },
           { lat: -1.85, lng: 36.783333, name: 'Kajiado - Conservancy', type: 'conservancy' },
@@ -422,12 +406,8 @@ export default {
       }
     },
     initCharts() {
-      if (this.campPieChart) {
-        this.campPieChart.destroy();
-      }
-      if (this.revenueDonutChart) {
-        this.revenueDonutChart.destroy();
-      }
+      if (this.campPieChart) this.campPieChart.destroy();
+      if (this.revenueDonutChart) this.revenueDonutChart.destroy();
 
       const campCtx = document.getElementById('campPieChart')?.getContext('2d');
       if (campCtx) {
@@ -507,24 +487,16 @@ export default {
     });
   },
   beforeUnmount() {
-    if (this.campPieChart) {
-      this.campPieChart.destroy();
-    }
-    if (this.revenueDonutChart) {
-      this.revenueDonutChart.destroy();
-    }
-    if (this.dashboardMap) {
-      this.dashboardMap.remove();
-    }
+    if (this.campPieChart) this.campPieChart.destroy();
+    if (this.revenueDonutChart) this.revenueDonutChart.destroy();
+    if (this.dashboardMap) this.dashboardMap.remove();
   },
   watch: {
     isSidebarCollapsed() {
       this.$nextTick(() => {
         this.initCharts();
         setTimeout(() => {
-          if (this.dashboardMap) {
-            this.dashboardMap.invalidateSize();
-          }
+          if (this.dashboardMap) this.dashboardMap.invalidateSize();
         }, 300);
       });
     }
@@ -539,7 +511,6 @@ export default {
   min-height: 100vh;
 }
 
-/* Sidebar Styles */
 .sidebar {
   width: 260px;
   background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
@@ -630,7 +601,6 @@ export default {
   border-left: 4px solid #4CAF50;
 }
 
-/* Dropdown Toggle - keeps alignment */
 .dropdown-toggle {
   justify-content: space-between;
 }
@@ -687,7 +657,6 @@ export default {
   padding: 20px 0;
 }
 
-/* Main Content */
 .main-content {
   flex: 1;
   margin-left: 260px;
@@ -701,7 +670,6 @@ export default {
   width: calc(100% - 70px);
 }
 
-/* Dashboard Styles */
 .dashboard-container {
   padding: 20px;
   background: #f5f7fa;
@@ -769,7 +737,6 @@ export default {
   background: #c0392b;
 }
 
-/* Stats Cards */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -815,7 +782,6 @@ export default {
   margin: 0;
 }
 
-/* Two Columns */
 .two-columns {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -837,7 +803,6 @@ export default {
   font-size: 16px;
 }
 
-/* Dashboard Map Styles */
 .dashboard-map {
   height: 250px;
   width: 100%;
@@ -847,7 +812,6 @@ export default {
   background: #e8f4f8;
 }
 
-/* Legend */
 .legend-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -869,7 +833,6 @@ export default {
   display: inline-block;
 }
 
-/* Pie Chart */
 .pie-chart-container {
   display: flex;
   flex-wrap: wrap;
@@ -903,7 +866,6 @@ canvas {
   display: inline-block;
 }
 
-/* Lease Agreements */
 .lease-agreements {
   margin-top: 12px;
 }
@@ -944,7 +906,6 @@ canvas {
   grid-column: 1 / -1;
 }
 
-/* Coming Soon */
 .coming-soon {
   text-align: center;
   padding: 40px 20px;
@@ -976,7 +937,6 @@ canvas {
   color: #7f8c8d;
 }
 
-/* Scrollbar */
 .sidebar::-webkit-scrollbar {
   width: 5px;
 }
@@ -990,7 +950,6 @@ canvas {
   border-radius: 5px;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .sidebar {
     transform: translateX(0);
