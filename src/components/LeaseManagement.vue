@@ -247,53 +247,7 @@ export default {
         paymentCycle: 'Annually',
         initialAmount: ''
       },
-      leases: [
-        {
-          id: 1,
-          name: 'Ann Wanjiru',
-          sizeOfLand: '2 Ha',
-          startDate: '2022-03-01',
-          signingDate: '2022-01-24',
-          paymentCycle: 'Annually',
-          initialAmount: 2000000
-        },
-        {
-          id: 2,
-          name: 'John Mwangi',
-          sizeOfLand: '5 Ha',
-          startDate: '2022-06-15',
-          signingDate: '2022-05-10',
-          paymentCycle: 'Quarterly',
-          initialAmount: 5000000
-        },
-        {
-          id: 3,
-          name: 'Mary Wanjiku',
-          sizeOfLand: '3 Ha',
-          startDate: '2023-01-10',
-          signingDate: '2022-12-05',
-          paymentCycle: 'Monthly',
-          initialAmount: 1500000
-        },
-        {
-          id: 4,
-          name: 'Peter Ochieng',
-          sizeOfLand: '10 Ha',
-          startDate: '2021-09-20',
-          signingDate: '2021-08-15',
-          paymentCycle: 'Annually',
-          initialAmount: 8000000
-        },
-        {
-          id: 5,
-          name: 'Sarah Kimani',
-          sizeOfLand: '1.5 Ha',
-          startDate: '2023-03-01',
-          signingDate: '2023-02-20',
-          paymentCycle: 'Monthly',
-          initialAmount: 750000
-        }
-      ]
+      leases: []
     }
   },
   computed: {
