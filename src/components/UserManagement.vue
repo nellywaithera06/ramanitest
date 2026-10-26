@@ -13,7 +13,7 @@
           class="search-input"
           placeholder="Search users..."
         />
-        <button class="add-btn" @click="openAddUserModal">
+        <button class="add-btn" @click="oApenAddUserModal">
           <i class="pi pi-plus"></i>
           Add User
         </button>
